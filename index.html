@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water for Change</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Water for Change</h1>
+            <p class="subtitle">Calculate Technology, Environment, Society, and Governance Realms</p>
+        </header>
+
+        <main>
+            <div class="city-condition">
+                <h2 style="color: white; font-weight: 700; font-size: 2.2rem;">Condition of the City in Realm</h2>
+                <div class="condition-result">
+                    <p>Water Sensitivity Level: <span id="water-sensitivity-level"></span></p>
+                </div>
+            </div>
+
+            <div class="realms-container">
+                <!-- Technology Realm -->
+                <section class="realm" id="technology-realm">
+                    <h2>Technology Realm</h2>
+                    <div class="indicators">
+                        <!-- Resilience -->
+                        <div class="indicator">
+                            <h3>1. Resilience</h3>
+                            <div class="input-group">
+                                <label for="affected-area">Affected Area during Urban Flooding (km²)</label>
+                                <small class="helper-text">(Consider design flood for inundation)</small>
+                                <input type="number" id="affected-area" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="city-area">City Area (km²)</label>
+                                <input type="number" id="city-area" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Resilience Score: <span id="resilience-score">-</span></p>
+                                <p>Rating: <span id="resilience-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Robust Infrastructure -->
+                        <div class="indicator">
+                            <h3>2. Robust Infrastructure</h3>
+                            <div class="input-group">
+                                <label for="affected-population">Affected Population during Failure</label>
+                                <small class="helper-text">(Average population affected over the years will be considered)</small>
+                                <input type="number" id="affected-population" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-population">Total Population</label>
+                                <input type="number" id="total-population" required>
+                            </div>
+                            <div class="result">
+                                <p>Failure Rate per Capita: <span id="failure-rate">-</span></p>
+                                <p>Rating: <span id="robust-infrastructure-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Integration and Intelligent Control -->
+                        <div class="indicator">
+                            <h3>3. Integration and Intelligent Control/Availability of SCADA systems</h3>
+                            <div class="input-group">
+                                <label for="monitored-piping">Length of Piping System with Monitoring (km)</label>
+                                <small class="helper-text">(Consider water supply pipelines only)</small>
+                                <input type="number" id="monitored-piping" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="automatic-devices">Automatic Devices</label>
+                                <input type="number" id="automatic-devices" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-piping">Total Length of Piping System (km)</label>
+                                <input type="number" id="total-piping" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Integration Score: <span id="integration-score">-</span></p>
+                                <p>Rating: <span id="integration-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Drainage Network -->
+                        <div class="indicator">
+                            <h3>4. Drainage Network</h3>
+                            <div class="input-group">
+                                <label for="drainage-area">Area of the city with Drainage Lines (km²)</label>
+                                <input type="number" id="drainage-area" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-city-area">Total City Area (km²)</label>
+                                <input type="number" id="total-city-area" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Drainage Index: <span id="drainage-index">-</span></p>
+                                <p>Rating: <span id="drainage-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Rainfall Harvesting -->
+                        <div class="indicator">
+                            <h3>5. Rainfall Harvesting</h3>
+                            <div class="input-group">
+                                <label for="harvested-water">Harvested Water(D) (m³)</label>
+                                <small class="helper-text">(D is total water harvested from precipitation (storage + groundwater recharge) (ML/year))</small>
+                                <input type="number" id="harvested-water" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="effective-precipitation">Effective Precipitation(P) (m³)</label>
+                                <small class="helper-text">(P is calculated as effective precipitation falling within the city boundary (ML/year))</small>
+                                <input type="number" id="effective-precipitation" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Rainfall Harvesting Index: <span id="harvesting-index">-</span></p>
+                                <p>Rating: <span id="harvesting-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Recycling of Wastewater -->
+                        <div class="indicator">
+                            <h3>6. Recycling of Wastewater</h3>
+                            <div class="input-group">
+                                <label for="reused-wastewater">Reuse and Recycling of Wastewater(Re) (m³)</label>
+                                <small class="helper-text">(Re = reuse and recycling of wastewater from the total water supplies to the city (ML/year))</small>
+                                <input type="number" id="reused-wastewater" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-water-supply">Total Water Supplies to City(C) (m³)</label>
+                                <small class="helper-text">(C is calculated as municipal water supply + private water use (ML/year), C is total water supplies to the city)</small>
+                                <input type="number" id="total-water-supply" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Recycling Index: <span id="recycling-index">-</span></p>
+                                <p>Rating: <span id="recycling-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Water Import Rate -->
+                        <div class="indicator">
+                            <h3>7. Water Import Rate</h3>
+                            <div class="input-group">
+                                <label for="imported-water">Amount of Water Imported from outside city boundary (I) (m³)</label>
+                                <small class="helper-text">(I is Amount of water imported from outside city boundary (ML/year))</small>
+                                <input type="number" id="imported-water" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-water-supply-wir">Total Water Supplies to City(C) (m³)</label>
+                                <input type="number" id="total-water-supply-wir" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Water Import Rate: <span id="water-import-rate">-</span></p>
+                                <p>Rating: <span id="water-import-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Daily Water Availability -->
+                        <div class="indicator">
+                            <h3>8. Daily Water Availability</h3>
+                            <div class="input-group">
+                                <label for="domestic-consumption">Total Domestic Water Consumption(E) (m³/day)</label>
+                                <small class="helper-text">(Total domestic water consumption is assumed as E (ML/year))</small>
+                                <input type="number" id="domestic-consumption" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="city-population">City Population</label>
+                                <input type="number" id="city-population" required>
+                            </div>
+                            <div class="input-group">
+                                <label for='amount-water-required-to-supply'>F</label>
+                                <small class="helper-text">(Amount of water required to supply (to one person for one year) as per codal provision (ML/year))</small>
+                                <input type="number" id='amount-water-required-to-supply' required>
+                            </div>
+                            <div class="result">
+                                <p>Per Capita Water Use: <span id="water-availability">-</span></p>
+                                <p>Rating: <span id="water-availability-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Water Distribution Networks -->
+                        <div class="indicator">
+                            <h3>9. Water Distribution Networks (WDNs) condition</h3>
+                            <div class="input-group">
+                                <label for="water-losses">Total Quantity of Water Losses(G) (m³)</label>
+                                <small class="helper-text">(G is measured in ML/year)</small>
+                                <input type="number" id="water-losses" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="water-supplied">Total Quantity of Water Supplied(H) (m³)</label>
+                                <small class="helper-text">(H is measured in ML/year)</small>
+                                <input type="number" id="water-supplied" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Leakage Percentage: <span id="leakage-percentage">-</span></p>
+                                <p>Rating: <span id="leakage-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Sanitation Facility -->
+                        <div class="indicator">
+                            <h3>10. Sanitation Facility</h3>
+                            <div class="input-group">
+                                <label for="population-with-sanitation">Population with Sanitation Facility</label>
+                                <input type="number" id="population-with-sanitation" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-population-sanitation">Total Population</label>
+                                <input type="number" id="total-population-sanitation" required>
+                            </div>
+                            <div class="result">
+                                <p>Sanitation Network State: <span id="sanitation-state">-</span></p>
+                                <p>Rating: <span id="sanitation-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Wastewater Treatment -->
+                        <div class="indicator">
+                            <h3>11. Wastewater Treatment</h3>
+                            <div class="input-group">
+                                <label for="treated-wastewater">Volume of Treated Wastewater (m³/year)</label>
+                                <input type="number" id="treated-wastewater" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-wastewater">Total Volume of Wastewater Generated (m³/year)</label>
+                                <input type="number" id="total-wastewater" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Treatment Capacity: <span id="treatment-capacity">-</span></p>
+                                <p>Rating: <span id="treatment-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="realm-result">
+                        <h3>Technology Realm Score: <span id="technology-realm-score">-</span></h3>
+                    </div>
+                    <div class="rating-scale">
+                        <h3>Technology Realm Rating Scales</h3>
+                        <div class="scale-item">
+                            <h4>1. Resilience</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.2)</li>
+                                <li>Low (0.2 &lt; score ≤ 0.4)</li>
+                                <li>Moderate (0.4 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.8)</li>
+                                <li>Very High (0.8 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>2. Robust Infrastructure</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.3)</li>
+                                <li>Low (0.3 &lt; score ≤ 0.4)</li>
+                                <li>Moderate (0.4 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>3. Integration and Intelligent Control</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.1)</li>
+                                <li>Low (0.1 &lt; score ≤ 0.3)</li>
+                                <li>Moderate (0.3 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>4. Drainage Network</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.1)</li>
+                                <li>Low (0.1 &lt; score ≤ 0.4)</li>
+                                <li>Moderate (0.4 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>5. Rainfall Harvesting</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.1)</li>
+                                <li>Low (0.1 &lt; score ≤ 0.3)</li>
+                                <li>Moderate (0.3 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>6. Recycling of Wastewater</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.3)</li>
+                                <li>Low (0.3 &lt; score ≤ 0.35)</li>
+                                <li>Moderate (0.35 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>7. Water Import Rate</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.1)</li>
+                                <li>Low (0.1 &lt; score ≤ 0.3)</li>
+                                <li>Moderate (0.3 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>8. Daily Water Availability</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.1)</li>
+                                <li>Low (0.1 &lt; score ≤ 0.3)</li>
+                                <li>Moderate (0.3 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>9. Water Distribution Networks</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.1)</li>
+                                <li>Low (0.1 &lt; score ≤ 0.3)</li>
+                                <li>Moderate (0.3 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>10. Sanitation Facility</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.3)</li>
+                                <li>Low (0.3 &lt; score ≤ 0.35)</li>
+                                <li>Moderate (0.35 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>11. Wastewater Treatment</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.1)</li>
+                                <li>Low (0.1 &lt; score ≤ 0.3)</li>
+                                <li>Moderate (0.3 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Environment Realm -->
+                <section class="realm" id="environment-realm">
+                    <h2>Environment Realm</h2>
+                    <div class="indicators">
+                        <!-- Restoration of Water Bodies -->
+                        <div class="indicator">
+                            <h3>1. Restoration of Water Bodies</h3>
+                            <div class="input-group">
+                                <label for="water-body-weights">Weights (comma-separated)</label>
+                                <small class="helper-text">(Weight associated with water body (varies from 0 to 1))</small>
+                                <input type="text" id="water-body-weights" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="water-body-areas">Areas (comma-separated)</label>
+                                <small class="helper-text">(Areas of water bodies in the city (km²))</small>
+                                <input type="text" id="water-body-areas" required>
+                            </div>
+                            <div class="result">
+                                <p>Aqua Health Index: <span id="aqua-health-index">-</span></p>
+                                <p>Rating: <span id="aqua-health-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Urban Green-Blue Spaces -->
+                        <div class="indicator">
+                            <h3>2. Enabling Pleasant Connected Urban Green-Blue Spaces</h3>
+                            <div class="input-group">
+                                <label for="green-blue-area">Green Blue Area (km²)</label>
+                                <input type="number" id="green-blue-area" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="environment-city-area">City Area (km²)</label>
+                                <input type="number" id="environment-city-area" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Urban Green-Blue Spaces Ratio: <span id="green-blue-ratio">-</span></p>
+                                <p>Rating: <span id="green-blue-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Water Circularity -->
+                        <div class="indicator">
+                            <h3>3. Water Circularity</h3>
+                            <div class="input-group">
+                                <label for="reused-wastewater-env">Volume of Reused Wastewater (ML/year)</label>
+                                <input type="number" id="reused-wastewater-env" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="harvested-rainwater">Volume of Harvested Rainwater (ML/year)</label>
+                                <input type="number" id="harvested-rainwater" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="generated-wastewater">Volume of Generated Wastewater (ML/year)</label>
+                                <input type="number" id="generated-wastewater" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-rainfall">Volume of Total Effective Rainfall (ML/year)</label>
+                                <input type="number" id="total-rainfall" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Water Circularity Index: <span id="water-circularity">-</span></p>
+                                <p>Rating: <span id="water-circularity-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="realm-result">
+                        <h3>Environment Realm Score: <span id="environment-realm-score">-</span></h3>
+                    </div>
+                    <div class="rating-scale">
+                        <h3>Environment Realm Rating Scales</h3>
+                        <div class="scale-item">
+                            <h4>1. Restoration of Water Bodies</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.3)</li>
+                                <li>Low (0.3 &lt; score ≤ 0.35)</li>
+                                <li>Moderate (0.35 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>2. Enabling Pleasant Connected Urban Green-Blue Spaces</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.3)</li>
+                                <li>Low (0.3 &lt; score ≤ 0.35)</li>
+                                <li>Moderate (0.35 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>3. Water Circularity</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.1)</li>
+                                <li>Low (0.1 &lt; score ≤ 0.3)</li>
+                                <li>Moderate (0.3 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.7)</li>
+                                <li>Very High (0.7 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Society Realm -->
+                <section class="realm" id="society-realm">
+                    <h2>Society Realm</h2>
+                    <div class="indicators">
+                        <!-- Awareness about Water -->
+                        <div class="indicator">
+                            <h3>1. Awareness about Water</h3>
+                            <div class="input-group">
+                                <label for="literacy-rate">Literacy Rate (%)</label>
+                                <small class="helper-text">(Consider 10th pass as the reference)</small>
+                                <input type="number" id="literacy-rate" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Literacy Rate: <span id="literacy-score">-</span></p>
+                                <p>Rating: <span id="literacy-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Social Vulnerability -->
+                        <div class="indicator">
+                            <h3>2. Social Vulnerability</h3>
+                            <div class="input-group">
+                                <label for="prepared-population">Population with Preparedness</label>
+                                <input type="number" id="prepared-population" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-affected-population">Total Affected Population</label>
+                                <input type="number" id="total-affected-population" required>
+                            </div>
+                            <div class="result">
+                                <p>Social Vulnerability Index: <span id="vulnerability-index">-</span></p>
+                                <p>Rating: <span id="vulnerability-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Community Satisfaction -->
+                        <div class="indicator">
+                            <h3>3. Community Satisfaction</h3>
+                            <div class="input-group">
+                                <label for="resolved-complaints">Number of Complaints Resolved By Water Utilities (in a year)</label>
+                                <input type="number" id="resolved-complaints" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="total-complaints">Total number of complaints received by water utilities (in a year)</label>
+                                <input type="number" id="total-complaints" required>
+                            </div>
+                            <div class="result">
+                                <p>Public Satisfaction: <span id="satisfaction-score">-</span></p>
+                                <p>Rating: <span id="satisfaction-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Access to Safe Water -->
+                        <div class="indicator">
+                            <h3>4. Access to Safe Water</h3>
+                            <div class="input-group">
+                                <label for="safe-water-access">Percentage of the urban population with access to safe drinking water, 24*7 (%)</label>
+                                <input type="number" id="safe-water-access" step="0.01" required>
+                            </div>
+                            <div class="result">
+                                <p>Accessibility Index: <span id="accessibility-index">-</span></p>
+                                <p>Rating: <span id="accessibility-rating" class="rating">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="realm-result">
+                        <h3>Society Realm Score: <span id="society-realm-score">-</span></h3>
+                    </div>
+                    <div class="rating-scale">
+                        <h3>Society Realm Rating Scales</h3>
+                        <div class="scale-item">
+                            <h4>1. Awareness about Water</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.2)</li>
+                                <li>Low (0.2 &lt; score ≤ 0.4)</li>
+                                <li>Moderate (0.4 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.8)</li>
+                                <li>Very High (0.8 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>2. Social Vulnerability</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.2)</li>
+                                <li>Low (0.2 &lt; score ≤ 0.4)</li>
+                                <li>Moderate (0.4 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.8)</li>
+                                <li>Very High (0.8 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>3. Community Satisfaction</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.2)</li>
+                                <li>Low (0.2 &lt; score ≤ 0.4)</li>
+                                <li>Moderate (0.4 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.8)</li>
+                                <li>Very High (0.8 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                        <div class="scale-item">
+                            <h4>4. Access to Safe Water</h4>
+                            <ul>
+                                <li>Very Low (0 &lt; score ≤ 0.2)</li>
+                                <li>Low (0.2 &lt; score ≤ 0.4)</li>
+                                <li>Moderate (0.4 &lt; score ≤ 0.6)</li>
+                                <li>High (0.6 &lt; score ≤ 0.8)</li>
+                                <li>Very High (0.8 &lt; score ≤ 1)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Governance Realm -->
+                <section class="realm" id="governance-realm">
+                    <h2>Governance Realm</h2>
+                    <div class="indicators">
+                        <!-- Monitoring and Alert System -->
+                        <div class="indicator">
+                            <h3>1. Monitoring and Alert System</h3>
+                            <div class="input-group">
+                                <label>Are there existing early alert systems for water-related hazards?</label>
+                                <select id="alert-system" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="result">
+                                <p>Score: <span id="alert-system-score">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Interdepartmental Coordination -->
+                        <div class="indicator">
+                            <h3>2. Interdepartmental Coordination</h3>
+                            <div class="input-group">
+                                <label>Are there involvement of diverse departments involved in urban water management in decision-making processes?</label>
+                                <select id="coordination" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="result">
+                                <p>Score: <span id="coordination-score">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Citizen Engagement -->
+                        <div class="indicator">
+                            <h3>3. Citizen Engagement in decision-making processes</h3>
+                            <div class="input-group">
+                                <label>Are there policies or frameworks to ensure citizen engagement in water system planning and management?</label>
+                                <select id="citizen-policies" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Are there opportunities for meaningful participation and input from citizens in decision-making processes?</label>
+                                <select id="citizen-participation" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="result">
+                                <p>Score: <span id="citizen-engagement-score">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Mediation Platforms -->
+                        <div class="indicator">
+                            <h3>4. Mediation Platforms and capacities</h3>
+                            <div class="input-group">
+                                <label>Are there mechanisms or platforms for resolving conflicts?</label>
+                                <select id="conflict-mechanisms" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Are there efforts to address conflicts and promote collaborative solutions?</label>
+                                <select id="collaborative-solutions" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="result">
+                                <p>Score: <span id="mediation-score">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Subsidies -->
+                        <div class="indicator">
+                            <h3>5. Subsidies for Water Resources</h3>
+                            <div class="input-group">
+                                <label>Are there subsidies or support for water conservation initiatives?</label>
+                                <select id="water-subsidies" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Are there sufficient funding or support for research and innovation in water resources?</label>
+                                <select id="research-funding" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="result">
+                                <p>Score: <span id="subsidies-score">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Connection with Water -->
+                        <div class="indicator">
+                            <h3>6. Connection with Water</h3>
+                            <div class="input-group">
+                                <label>Are there government policies to conduct workshops / storytelling regarding water-related aspects?</label>
+                                <select id="water-workshops" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="result">
+                                <p>Score: <span id="connection-score">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Adequate Maintenance -->
+                        <div class="indicator">
+                            <h3>7. Adequate Maintenance</h3>
+                            <div class="input-group">
+                                <label>Are there adequate access to funding for maintenance activities, hindering proper maintenance efforts?</label>
+                                <select id="maintenance-funding" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Are there understanding and planning for long-term maintenance needs of traditional water infrastructure and green-blue assets?</label>
+                                <select id="long-term-planning" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Are there available maintenance guidelines and procedures for water-related and green-blue infrastructure?</label>
+                                <select id="maintenance-guidelines" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Are there comprehensive databases to record assets in a digital platform?</label>
+                                <select id="asset-databases" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="result">
+                                <p>Score: <span id="maintenance-score">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- NGOs and SHGs -->
+                        <div class="indicator">
+                            <h3>8. Non-Governmental Organization (NGOs) and self-help groups (SHGs) working towards water sensitivity</h3>
+                            <div class="input-group">
+                                <label>Are there NGOs and SHGs working to enhance water sensitivity?</label>
+                                <select id="ngos-shgs" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Does NGOs and SHGs collaborate with local governments and other stakeholders to achieve water sensitivity goals?</label>
+                                <select id="ngo-collaboration" required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="result">
+                                <p>Score: <span id="ngo-score">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="realm-result">
+                        <h3>Governance Realm Score: <span id="governance-realm-score">-</span></h3>
+                    </div>
+                    <div class="rating-scale">
+                        <h3>Governance Realm Rating Scale</h3>
+                        <div class="scale-item">
+                            <h4>All Indicators</h4>
+                            <ul>
+                                <li>0 - Neither any questions have 'YES' answer</li>
+                                <li>1 - Some or all questions have 'YES' answer</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
